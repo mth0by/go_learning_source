@@ -3,12 +3,43 @@ package greetings
 import (
 	"errors"
 	"fmt"
+	"math/rand"
 )
 
-func Hello(name string) (string, error) {
-	if name == "" {
-		return "", errors.New("empty name")
+func Hellos(names []string) ([]string, error) {
+	if len(names) == 0 {
+		return []string{}, errors.New("names list is empty")
 	}
 
-	return fmt.Sprintf("Hello, %v. Welcome!", name), nil
+	var greetings []string
+	for _, name := range names {
+		greet, err := Hello(name)
+		if err != nil {
+			continue
+		}
+
+		greetings = append(greetings, greet)
+	}
+
+	return greetings, nil
+
+}
+
+func Hello(name string) (string, error) {
+	if len(name) == 0 {
+		return "", errors.New("name is empty")
+	}
+
+	return fmt.Sprintf(getRandomGreeting(), name), nil 
+}
+
+func getRandomGreeting() string {
+	choices := []string{
+		"Hi, %v. Welcome",
+		"Great to see you, %v",
+		"Hail, %v! Well met!",
+		"Ricorda, %v, dove vedrai",
+	}
+
+	return choices[rand.Intn(len(choices))]
 }
