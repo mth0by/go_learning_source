@@ -30,7 +30,9 @@ func Hello(name string) (string, error) {
 		return "", errors.New("name is empty")
 	}
 
-	return fmt.Sprintf(getRandomGreeting(), name), nil 
+	message := fmt.Sprintf(getRandomGreeting(), name)
+
+	return message, nil 
 }
 
 func getRandomGreeting() string {
